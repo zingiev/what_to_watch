@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql.expression import func
 
@@ -23,7 +23,12 @@ def index_view():
     opinion = Opinion.query.order_by(func.random()).first()
     if opinion is None:
         return 'В базе данных мнений о фильмах нет.'
-    return opinion.text
+    return render_template('index.html', opinion=opinion)
+
+
+@app.route('/add')
+def add_view():
+    return render_template('add.html')
 
 
 if __name__ == '__main__':
